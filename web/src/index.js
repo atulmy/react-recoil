@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom'
 import { RecoilRoot as GlobalState } from 'recoil'
 
 // App imports
-import App from './App'
+import App from './common/App'
 
 // Root
 ReactDOM.render(
