@@ -7,19 +7,21 @@ export const login = username => {
 }
 
 // login set localStorage
-export const loginSetLocalStorage = (token, user) => {
-  if (token) {
-    axios.defaults.headers.common['Authentication'] = `Bearer ${token}`
-  } else {
-    delete axios.defaults.headers.common['Authentication']
-  }
+export const loginSet = (token, user) => {
+  // HTTP header
+  axios.defaults.headers.common['Authentication'] = `Bearer ${token}`
 
+  // localStorage values
   window.localStorage.setItem('token', token)
   window.localStorage.setItem('user', JSON.stringify(user))
 }
 
 // logout remove localStorage
-export const logoutRemoveLocalStorage = () => {
+export const logoutUnset = () => {
+  // HTTP header
+  delete axios.defaults.headers.common['Authentication']
+
+  // localStorage values
   window.localStorage.removeItem('token')
   window.localStorage.removeItem('user')
 }

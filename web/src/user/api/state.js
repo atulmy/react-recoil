@@ -1,6 +1,9 @@
 // Imports
 import { atom } from 'recoil'
 
+// App imports
+import { loginSet } from './actions/query'
+
 const userAuthDefault = {
   isAuthenticated: false,
   user: null
@@ -13,6 +16,8 @@ if (token && token !== 'undefined' && token !== '') {
   const user = JSON.parse(window.localStorage.getItem('user'))
 
   if (user) {
+    loginSet(token, user)
+
     userAuthDefault.isAuthenticated = true
     userAuthDefault.user = user
   }

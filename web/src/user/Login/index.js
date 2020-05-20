@@ -6,7 +6,7 @@ import { useSetRecoilState } from 'recoil'
 import routes from '../../routes'
 import { commonNotification } from '../../common/api/state'
 import { userAuth } from '../../user/api/state'
-import { login, loginSetLocalStorage } from '../api/actions/query'
+import { login, loginSet } from '../api/actions/query'
 
 // Component
 const Login = ({ history }) => {
@@ -38,7 +38,7 @@ const Login = ({ history }) => {
         })
 
         // local storage
-        loginSetLocalStorage(data.token, data.user)
+        loginSet(data.token, data.user)
 
         // redirect to dashboard
         history.push(routes.user.dashboard)
