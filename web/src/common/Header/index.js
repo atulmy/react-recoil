@@ -1,10 +1,11 @@
 // Imports
 import React from 'react'
-import { useRecoilState } from 'recoil'
-import { Link } from 'react-router-dom'
+import { useRecoilState, useSetRecoilState } from 'recoil'
+import { Link, useHistory } from 'react-router-dom'
 
 // App imports
 import routes from '../../routes'
+import { commonNotification } from '../../common/api/state'
 import { userAuth } from '../../user/api/state'
 import { logoutUnset } from '../../user/api/actions/query'
 
@@ -12,8 +13,8 @@ import { logoutUnset } from '../../user/api/actions/query'
 const Header = () => {
   // state
   const [auth, setAuth] = useRecoilState(userAuth)
-
-  console.log(auth)
+  const setNotification = useSetRecoilState(commonNotification)
+  let history = useHistory()
 
   // onLogout
   const onLogout = () => {
@@ -22,7 +23,14 @@ const Header = () => {
       user: null
     })
 
+    setNotification({
+      message: 'Logged out successfully.',
+      isVisible: true
+    })
+
     logoutUnset()
+
+    history.push(routes.user.login)
   }
 
   // render
