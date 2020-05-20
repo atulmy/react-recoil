@@ -2,11 +2,11 @@
 import React from 'react'
 
 // Component
-const Home = () => {
+const Dashboard = () => {
   // render
   return (
-    <div>Home</div>
+    <div>Dashboard</div>
   )
 }
 
-export default Home
+export default Dashboard

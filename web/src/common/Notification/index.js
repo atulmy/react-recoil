@@ -5,6 +5,7 @@ import { useRecoilState } from 'recoil'
 // App imports
 import { commonNotification } from './../api/state'
 
+// Component
 const Notification = () => {
   // state
   const [notification, setNotification] = useRecoilState(commonNotification)
@@ -16,7 +17,6 @@ const Notification = () => {
       isVisible: false
     }))
   }
-
 
   return (
     <>

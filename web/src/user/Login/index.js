@@ -1,30 +1,53 @@
 // Imports
 import React, { useState } from 'react'
+import { useSetRecoilState } from 'recoil'
 
 // App imports
-import { login } from '../api/actions/query'
+import routes from '../../routes'
+import { commonNotification } from '../../common/api/state'
+import { userAuth } from '../../user/api/state'
+import { login, loginSetLocalStorage } from '../api/actions/query'
 
-const Login = () => {
+// Component
+const Login = ({ history }) => {
   // state
-  const [username, setUsername] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
+  const [username, setUsername] = useState('user')
+  const setNotification = useSetRecoilState(commonNotification)
+  const setUserAuth = useSetRecoilState(userAuth)
 
   // on submit
   const onSubmit = async event => {
     event.preventDefault()
 
-    setIsLoading(true)
-
     try {
+      // server call
       const { data } = await login(username)
 
-      if (data.success && data.data) {
+      // show notification
+      setNotification({
+        message: data.message,
+        isVisible: true
+      })
 
+      // redirect
+      if (data.success) {
+        // state
+        setUserAuth({
+          isAuthenticated: true,
+          user: data.user
+        })
+
+        // local storage
+        loginSetLocalStorage(data.token, data.user)
+
+        // redirect to dashboard
+        history.push(routes.user.dashboard)
       }
     } catch (error) {
-      console.log(error)
-    } finally {
-      setIsLoading(false)
+      setNotification({
+        message: error.message,
+        isVisible: true
+      })
     }
   }
 
@@ -39,13 +62,11 @@ const Login = () => {
           value={username}
           onChange={event => setUsername(event.target.value)}
           placeholder='Username'
+          required
           autoFocus
         />
 
-        <button
-          type='submit'
-          disabled={isLoading}
-        >
+        <button type='submit'>
           Submit
         </button>
       </form>

@@ -1,6 +1,7 @@
 // Imports
 import React from 'react'
 
+// Component
 const About = () => {
   // render
   return (

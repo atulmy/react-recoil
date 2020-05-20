@@ -1,10 +1,11 @@
 // Imports
 import { atom } from 'recoil'
 
+// notification
 export const commonNotification = atom({
   key: 'commonNotification',
   default: {
-    message: 'test',
-    isVisible: true,
-  },
+    isVisible: false,
+    message: ''
+  }
 })

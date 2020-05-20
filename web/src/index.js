@@ -4,13 +4,13 @@ import ReactDOM from 'react-dom'
 import { RecoilRoot as GlobalState } from 'recoil'
 
 // App imports
-import App from './common/App'
+import Layout from './common/Layout'
 
 // Root
 ReactDOM.render(
   <React.StrictMode>
     <GlobalState>
-      <App />
+      <Layout />
     </GlobalState>
   </React.StrictMode>,
 

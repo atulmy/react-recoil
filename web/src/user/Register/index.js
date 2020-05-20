@@ -1,27 +1,41 @@
 // Imports
 import React, { useState } from 'react'
+import { useSetRecoilState } from 'recoil'
 
 // App imports
+import routes from '../../routes'
+import { commonNotification } from '../../common/api/state'
 import { register } from '../api/actions/mutation'
 
+// Component
 const Register = ({ history }) => {
   // state
   const [username, setUsername] = useState('')
+  const setNotification = useSetRecoilState(commonNotification)
 
   // on submit
   const onSubmit = async event => {
     event.preventDefault()
 
     try {
+      // server call
       const { data } = await register(username)
 
-      console.log(data)
+      // show notification
+      setNotification({
+        message: data.message,
+        isVisible: true
+      })
 
+      // redirect
       if (data.success) {
-        history.push('/user/login')
+        history.push(routes.user.login)
       }
     } catch (error) {
-      console.log(error)
+      setNotification({
+        message: error.message,
+        isVisible: true
+      })
     }
   }
 
@@ -36,6 +50,7 @@ const Register = ({ history }) => {
           value={username}
           onChange={event => setUsername(event.target.value)}
           placeholder='Username'
+          required
           autoFocus
         />
 
