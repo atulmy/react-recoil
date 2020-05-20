@@ -3,15 +3,44 @@
 // Imports
 const express = require('express')
 const bodyParser = require('body-parser')
+const cors = require('cors')
 
-// Express Settings
+// Express
 let app = express()
 let port = 4000
-
-// Body Parser
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
+app.use(cors())
 
-app.get('/', (req, res) => res.send('Hello World!'))
+// Database
+let users = []
+let notes = []
 
-app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`))
+// Routes
+// user register
+app.post('/user/register', (req, res) => {
+  const id = users.length + 1
+
+  // create user
+  users.push({
+    id,
+    username: req.body.username
+  })
+
+  res.json({
+    success: true
+  })
+})
+
+// user login
+app.post('/user/login', (req, res) => {
+  // find user
+  const user = users.find(u => u.username === req.body.username)
+
+  res.json({
+    success: !!user,
+    user
+  })
+})
+
+app.listen(port, () => console.log(`Server listening at http://localhost:${port}`))

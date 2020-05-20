@@ -1,14 +1,16 @@
 // Imports
 import React from 'react'
-import { BrowserRouter, Route, Switch, Link } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom'
 
 // App imports
-import Home from './Home'
-import About from './About'
+import Home from './pages/Home'
+import About from './pages/About'
+import UserRegister from './user/Register'
+import UserLogin from './user/Login'
 
 const App = () => {
   return (
-    <BrowserRouter>
+    <Router>
       {/* navigation */}
       <ul>
         <li>
@@ -17,21 +19,27 @@ const App = () => {
         <li>
           <Link to="/about">About</Link>
         </li>
+        <li>
+          <Link to="/user/register">Register</Link>
+        </li>
+        <li>
+          <Link to="/user/login">Login</Link>
+        </li>
       </ul>
 
       <hr />
 
-      {/* pages */}
+      {/* routes */}
       <Switch>
-        <Route path="/" exact>
-          <Home />
-        </Route>
+        <Route path="/" component={Home} exact />
 
-        <Route path="/about">
-          <About />
-        </Route>
+        <Route path="/about" component={About} />
+
+        <Route path="/user/register" component={UserRegister} />
+
+        <Route path="/user/login" component={UserLogin} />
       </Switch>
-    </BrowserRouter>
+    </Router>
   )
 }
 

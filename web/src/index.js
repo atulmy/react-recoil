@@ -1,7 +1,7 @@
 // Imports
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { RecoilRoot } from 'recoil'
+import { RecoilRoot as GlobalState } from 'recoil'
 
 // App imports
 import App from './App'
@@ -9,9 +9,9 @@ import App from './App'
 // Root
 ReactDOM.render(
   <React.StrictMode>
-    <RecoilRoot>
+    <GlobalState>
       <App />
-    </RecoilRoot>
+    </GlobalState>
   </React.StrictMode>,
 
   document.getElementById('root')
