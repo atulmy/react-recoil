@@ -5,15 +5,15 @@ import { useSetRecoilState } from 'recoil'
 // App imports
 import routes from '../../routes'
 import { commonNotification } from '../../common/api/state'
-import { userAuth } from '../../user/api/state'
-import { login, loginSet } from '../api/actions/query'
+import { noteUpdatedOn } from '../api/state'
+import { create } from '../api/actions/mutation'
 
 // Component
-const Login = ({ history }) => {
+const Create = ({ history }) => {
   // state
-  const [username, setUsername] = useState('user')
+  const [text, setText] = useState('Hello world')
   const setNotification = useSetRecoilState(commonNotification)
-  const setUserAuth = useSetRecoilState(userAuth)
+  const setUpdatedOn = useSetRecoilState(noteUpdatedOn)
 
   // on submit
   const onSubmit = async event => {
@@ -21,7 +21,7 @@ const Login = ({ history }) => {
 
     try {
       // server call
-      const { data } = await login(username)
+      const { data } = await create(text)
 
       // show notification
       setNotification({
@@ -31,17 +31,10 @@ const Login = ({ history }) => {
 
       // redirect
       if (data.success) {
-        // state
-        setUserAuth({
-          isAuthenticated: true,
-          user: data.user
-        })
+        setUpdatedOn(new Date())
 
-        // local storage
-        loginSet(data.token, data.user)
-
-        // redirect to dashboard
-        history.push(routes.user.dashboard)
+        // redirect to note list
+        history.push(routes.note.list)
       }
     } catch (error) {
       setNotification({
@@ -51,17 +44,22 @@ const Login = ({ history }) => {
     }
   }
 
+  // on cancel
+  const onCancel = () => {
+    history.push(routes.note.list)
+  }
+
   // render
   return (
     <section>
-      <h3>Login</h3>
+      <h3>Create Note</h3>
 
       <form onSubmit={onSubmit}>
         <input
           type='text'
-          value={username}
-          onChange={event => setUsername(event.target.value)}
-          placeholder='Username'
+          value={text}
+          onChange={event => setText(event.target.value)}
+          placeholder='Enter note'
           required
           autoFocus
         />
@@ -69,9 +67,16 @@ const Login = ({ history }) => {
         <button type='submit'>
           <strong>Submit</strong>
         </button>
+
+        <button
+          type='button'
+          onClick={onCancel}
+        >
+          Cancel
+        </button>
       </form>
     </section>
   )
 }
 
-export default Login
+export default Create

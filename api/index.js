@@ -34,11 +34,9 @@ app.post('/user/register', (req, res) => {
   const user = users.find(u => u.username === req.body.username)
 
   if(!user) {
-    const id = users.length + 1
-
     // create user
     users.push({
-      id,
+      id: users.length + 1,
       username: req.body.username
     })
 
@@ -93,6 +91,43 @@ app.get('/note/list', (req, res) => {
       // find notes
       response.list = notes.filter(n => n.userId === user.id)
       response.success = true
+    } else {
+      response.message = 'You are not authorized.'
+    }
+  } catch (e) {
+    response.message = 'There was some server error.'
+  }
+
+  res.json(response)
+})
+
+// note create
+app.post('/note/create', (req, res) => {
+  const response = {
+    success: false,
+    message: '',
+    list: []
+  }
+
+  try {
+    let header = req.headers.authentication
+    const userToken = jwt.verify(header.split(' ')[1], 'SECRET')
+
+    // find user
+    const user = users.find(u => u.id === userToken.id)
+
+    if(user) {
+      // create note
+      notes.push({
+        id: notes.length + 1,
+        userId: user.id,
+        text: req.body.text
+      })
+
+      console.log(notes)
+
+      response.success = true
+      response.message = 'Note has been added successfully.'
     } else {
       response.message = 'You are not authorized.'
     }

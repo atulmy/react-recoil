@@ -1,5 +1,5 @@
 // Imports
-import { selector } from 'recoil'
+import { atom, selector } from 'recoil'
 
 // App imports
 import { userAuth } from '../../user/api/state'
@@ -11,6 +11,7 @@ export const noteList = selector({
   get: async ({ get }) => {
     // force update cached data based on user
     get(userAuth)
+    get(noteUpdatedOn)
 
     let notes = []
 
@@ -26,4 +27,10 @@ export const noteList = selector({
 
     return notes
   }
+})
+
+// note count
+export const noteUpdatedOn = atom({
+  key: 'noteUpdatedOn',
+  default: new Date()
 })

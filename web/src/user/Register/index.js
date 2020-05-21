@@ -55,7 +55,7 @@ const Register = ({ history }) => {
         />
 
         <button type='submit'>
-          Submit
+          <strong>Submit</strong>
         </button>
       </form>
     </section>
