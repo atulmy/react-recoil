@@ -5,7 +5,11 @@ import React from 'react'
 const Home = () => {
   // render
   return (
-    <div>Home</div>
+    <div>
+      <h3>Home</h3>
+
+      <p>This is home page.</p>
+    </div>
   )
 }
 
