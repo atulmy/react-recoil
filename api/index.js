@@ -17,6 +17,10 @@ app.use(cors())
 let users = [
   { id: 1, username: 'user' }
 ]
+let notes = [
+  { id: 1, userId: 1, text: 'Hello world.' },
+  { id: 2, userId: 1, text: 'This is a note I have noted down.' },
+]
 
 // Routes
 // user register
@@ -65,6 +69,35 @@ app.post('/user/login', (req, res) => {
     response.token = jwt.sign({ id: user.id }, 'SECRET')
   } else {
     response.message = 'Unable to login, user not found.'
+  }
+
+  res.json(response)
+})
+
+// note list
+app.get('/note/list', (req, res) => {
+  const response = {
+    success: false,
+    message: '',
+    list: []
+  }
+
+  try {
+    let header = req.headers.authentication
+    const userToken = jwt.verify(header.split(' ')[1], 'SECRET')
+
+    // find user
+    const user = users.find(u => u.id === userToken.id)
+
+    if(user) {
+      // find notes
+      response.list = notes.filter(n => n.userId === user.id)
+      response.success = true
+    } else {
+      response.message = 'You are not authorized.'
+    }
+  } catch (e) {
+    response.message = 'There was some server error.'
   }
 
   res.json(response)

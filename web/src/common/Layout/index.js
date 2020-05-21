@@ -11,6 +11,7 @@ import PagesAbout from '../../pages/About'
 import UserRegister from '../../user/Register'
 import UserLogin from '../../user/Login'
 import UserDashboard from '../../user/Dashboard'
+import NoteList from '../../note/List'
 
 // Component
 const Layout = () => {
@@ -38,6 +39,8 @@ const Layout = () => {
           <Route path={routes.user.login} component={UserLogin} />
 
           <Route path={routes.user.dashboard} component={UserDashboard} />
+
+          <Route path={routes.note.list} component={NoteList} />
         </Switch>
       </main>
     </Router>

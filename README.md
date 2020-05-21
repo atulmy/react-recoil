@@ -13,6 +13,6 @@ Being used in sophisticated data analysis tool developed at Facebook which led t
 An alternative to Redux and other state management solutions.
 
 ## Resources
-Website: https://recoiljs.org/
+Website: https://recoiljs.org
 
 Video: https://www.youtube.com/watch?v=_ISAA_Jt9kI

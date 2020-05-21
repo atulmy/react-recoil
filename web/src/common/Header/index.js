@@ -50,6 +50,9 @@ const Header = () => {
                   <Link to={routes.user.dashboard}>Dashboard</Link>
                 </li>
                 <li>
+                  <Link to={routes.note.list}>Notes</Link>
+                </li>
+                <li>
                   <button onClick={onLogout}>Logout</button>
                 </li>
               </>
