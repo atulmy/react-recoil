@@ -89,7 +89,7 @@ app.get('/note/list', (req, res) => {
 
     if(user) {
       // find notes
-      response.list = notes.filter(n => n.userId === user.id)
+      response.list = notes.filter(n => n.userId === user.id).reverse()
       response.success = true
     } else {
       response.message = 'You are not authorized.'
